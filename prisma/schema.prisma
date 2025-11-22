@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String              @id @default(cuid())
+  email             String              @unique
+  password          String
+  name              String?
+  maritalStatus     String?
+  dateOfBirth       String?
+  gender            String?
+  height            Int?
+  weight            Int?
+  bloodType         String?
+  ethnicity         String?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  familyMembers     FamilyMember[]
+  appointments      Appointment[]
+}
+
+model FamilyMember {
+  id              String                @id @default(cuid())
+  userId          String
+  user            User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  relationship    String
+  age             Int
+  gender          String
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
+  medicalHistory  MedicalCondition[]
+  medicalDocuments MedicalDocument[]
+}
+
+model MedicalCondition {
+  id              String              @id @default(cuid())
+  familyMemberId  String
+  familyMember    FamilyMember        @relation(fields: [familyMemberId], references: [id], onDelete: Cascade)
+  condition        String
+  diagnosisDate   String
+  severity        String              // 'mild', 'moderate', 'severe'
+  treatment       String?
+  notes           String?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model MedicalDocument {
+  id              String              @id @default(cuid())
+  familyMemberId  String
+  familyMember    FamilyMember        @relation(fields: [familyMemberId], references: [id], onDelete: Cascade)
+  name            String
+  type            String
+  size            String
+  uploadDate      String
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model Specialization {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  description String?
+  doctors   Doctor[]
+}
+
+model Doctor {
+  id               String   @id @default(cuid())
+  name             String
+  specializationId String
+  specialization   Specialization @relation(fields: [specializationId], references: [id], onDelete: Cascade)
+  location         String?
+  phone            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  appointments     Appointment[]
+}
+
+model Appointment {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  doctorId   String
+  doctor     Doctor   @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  specialty  String
+  date       String
+  time       String
+  notes      String?
+  status     String   @default("requested")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
