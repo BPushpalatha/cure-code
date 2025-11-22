@@ -13,7 +13,8 @@
                     "db:generate":  "prisma generate",
                     "db:migrate":  "prisma migrate dev",
                     "db:reset":  "prisma migrate reset",
-                    "signal-server":  "node server/signaling-server.js"
+                    "signal-server":  "node server/signaling-server.js",
+                    "prisma:migrate:deploy":  "prisma migrate deploy"
                 },
     "scriptsAlt":  {
                        "dev:all":  "concurrently \"npm run signal-server\" \"npm run dev\""
