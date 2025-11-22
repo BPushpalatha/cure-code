@@ -48,5 +48,3 @@ prompt
 
 server.log
 prisma/prisma/dev.db
-# Ignore local SQLite databases
-db/*.db

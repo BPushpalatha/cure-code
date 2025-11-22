@@ -3,7 +3,6 @@
   "framework": "nextjs",
   "env": {
     "NEXT_PUBLIC_SOCKET_URL": "@NEXT_PUBLIC_SOCKET_URL",
-    "DATABASE_URL": "@DATABASE_URL",
-    "DATABASE_PROVIDER": "@DATABASE_PROVIDER"
+    "DATABASE_URL": "@DATABASE_URL"
   }
 }
