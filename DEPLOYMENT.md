@@ -42,3 +42,21 @@ vercel --prod
 ## Notes
 - The signaling server in `server/signaling-server.js` is not deployed on Vercel. Host it on a separate platform and point `NEXT_PUBLIC_SOCKET_URL` to it.
 - If `DATABASE_URL` is not set in production, appointment APIs will not work.
+## Database Migrations (Production)
+- Ensure DATABASE_URL is set in Vercel Project Settings.
+- Apply schema changes to production once per change:
+
+Windows PowerShell:
+`powershell
+postgresql://... = "<your-postgres-url>"
+npm run prisma:migrate:deploy
+`
+
+macOS/Linux:
+`ash
+DATABASE_URL="<your-postgres-url>" npm run prisma:migrate:deploy
+`
+
+Notes:
+- This runs prisma migrate deploy against the target database and is safe to run multiple times.
+- postinstall already runs prisma generate automatically on Vercel.
