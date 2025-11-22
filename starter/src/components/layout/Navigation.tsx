@@ -27,14 +27,10 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
 
   const navigationItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'find-specialty', label: 'Find Specialty', icon: Search },
-    { id: 'admin-appointments', label: 'Admin Appointments', icon: Calendar },
-    { id: 'doctor-appointments', label: 'Doctor Appointment', icon: Calendar },
     { id: 'family-history', label: 'Family History', icon: Users },
     { id: 'family-tree', label: 'Family Tree', icon: Heart },
     { id: 'risk-assessment', label: 'Risk Assessment', icon: BarChart3 },
     { id: 'diet-plans', label: 'Diet Plans', icon: Utensils },
-    { id: 'appointments', label: 'Screening & Appointments', icon: Calendar },
     { id: 'health-tracking', label: 'Health Tracking', icon: Activity }
   ]
 
@@ -97,34 +93,7 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
             {navigationItems.map((item) => {
               const Icon = item.icon
-              // special case: external/internal route for find-specialty
-              if (item.id === 'find-specialty') {
-                return (
-                  <Button
-                    key={item.id}
-                    variant={"outline"}
-                    className={`h-12 text-sm border-gray-300 text-gray-700 hover:bg-gray-50`}
-                    onClick={() => { window.location.href = '/find-specialty' }}
-                  >
-                    <Icon className="w-4 h-4 mr-1" />
-                    {item.label}
-                  </Button>
-                )
-              }
-
-              if (item.id === 'admin-appointments') {
-                return (
-                  <Button
-                    key={item.id}
-                    variant={"outline"}
-                    className={`h-12 text-sm border-gray-300 text-gray-700 hover:bg-gray-50`}
-                    onClick={() => { window.location.href = '/admin/appointments' }}
-                  >
-                    <Icon className="w-4 h-4 mr-1" />
-                    {item.label}
-                  </Button>
-                )
-              }
+              
 
               return (
                 <Button

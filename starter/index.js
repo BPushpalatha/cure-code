@@ -5,7 +5,7 @@ import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profile.js';
 import familyRoutes from './routes/family.js';
 import medicalRoutes from './routes/medical.js';
-import appointmentsRoutes from './routes/appointments.js';
+// appointments feature removed
 
 const app = express();
 const prisma = new PrismaClient();
@@ -21,7 +21,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/family', familyRoutes);
 app.use('/api/medical', medicalRoutes);
-app.use('/api/appointments', appointmentsRoutes);
+// appointments feature removed
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

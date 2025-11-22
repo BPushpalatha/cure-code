@@ -6,12 +6,10 @@ import { AuthProvider } from '@/contexts/AuthContext'
 import Header from '@/components/layout/Header'
 import Navigation from '@/components/layout/Navigation'
 import Dashboard from '@/components/health/Dashboard'
-import Specializations from '@/components/appointments/Specializations'
 import FamilyHistoryForm from '@/components/health/FamilyHistoryForm'
 import FamilyTreeVisualization from '@/components/health/FamilyTreeVisualization'
 import RiskAssessmentDashboard from '@/components/health/RiskAssessmentDashboard'
 import DietPlanDashboard from '@/components/health/DietPlanDashboard'
-import ClinicalSchedulingDashboard from '@/components/health/ClinicalSchedulingDashboard'
 import HealthTracking from '@/components/health/HealthTracking'
 import ProfileForm from '@/components/health/ProfileForm'
 import { DayPlan, RiskResult } from '@/lib/diet'
@@ -43,15 +41,6 @@ type FamilyMember = {
   documents: MedicalDocument[]
 }
 
-type Appointment = {
-  id: string
-  memberId: string
-  memberName: string
-  condition: string
-  severity: 'mild' | 'moderate' | 'severe'
-  date: string
-  clinic: string
-}
 
 export default function Home() {
   const router = useRouter()
@@ -60,7 +49,7 @@ export default function Home() {
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null)
   const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([])
   const [dietPlan, setDietPlan] = useState<DayPlan[] | null>(null)
-  const [appointments, setAppointments] = useState<Appointment[]>([])
+  
   const [riskResult, setRiskResult] = useState<RiskResult | null>(null)
   useEffect(() => {
     if (typeof window === 'undefined') return
@@ -90,7 +79,7 @@ export default function Home() {
               setDietPlan(plan)
               setActiveTab('diet-plans')
             }}
-            onSetAppointments={(appts) => setAppointments(appts)}
+            
           />
         )
       case 'profile':
@@ -101,10 +90,7 @@ export default function Home() {
         return <RiskAssessmentDashboard familyMembers={familyMembers} />
       case 'diet-plans':
         return <DietPlanDashboard dietPlan={dietPlan} risk={riskResult} familyMembers={familyMembers} />
-      case 'appointments':
-        return <ClinicalSchedulingDashboard appointments={appointments} />
-      case 'doctor-appointments':
-        return <Specializations initialSpecialty={selectedSpecialty} />
+      
       case 'health-tracking':
         return <HealthTracking />
       default:
